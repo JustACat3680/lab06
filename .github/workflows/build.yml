@@ -30,6 +30,10 @@ jobs:
         cd build
         cpack -G TGZ
         cpack -G ZIP
+        cpack -G DEB
+        cpack -G RPM
+        cpack -G WIX
+        cpack -G DragNDrop
 
     - name: Загрузка артефактов
       uses: actions/upload-artifact@v4
@@ -38,5 +42,21 @@ jobs:
         path: |
           build/*.tar.gz
           build/*.zip
+          build/*.deb
+          build/*.rpm
+          build/*.msi
+          build/*.dmg
 
+    - name: Создание релиза
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          build/*.tar.gz
+          build/*.zip
+          build/*.deb
+          build/*.rpm
+          build/*.msi
+          build/*.dmg
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
