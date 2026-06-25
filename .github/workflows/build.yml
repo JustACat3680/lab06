@@ -27,21 +27,16 @@ jobs:
 
     - name: Создание архивов
       run: |
-        mkdir scripts
-        cp -r formatter_lib scripts; rm scripts/formatter_lib/CMakeLists.txt
-        cp -r formatter_ex_lib scripts; rm scripts/formatter_ex_lib/CMakeLists.txt
-        cp -r solver_lib scripts; rm scripts/solver_lib/CMakeLists.txt
-        cp -r solver_application scripts; rm scripts/solver_application/CMakeLists.txt
-        cd scripts
+        cd build
         cpack -G TGZ
         cpack -G ZIP
 
     - name: Загрузка артефактов
       uses: actions/upload-artifact@v4
       with:
-        name: scripts
+        name: build
         path: |
-          scripts/*.tar.gz
-          scripts/*.zip
+          build/*.tar.gz
+          build/*.zip
 
 
