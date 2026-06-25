@@ -30,8 +30,6 @@ jobs:
         cd build
         cpack -G TGZ
         cpack -G ZIP
-        cpack -G DEB
-        cpack -G RPM
         cpack -G WIX
         cpack -G DragNDrop
 
