@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.31)
+set(CMAKE_CXX_STANDARD 17)
+project(formatter)
+add_library(formatter STATIC formatter.cpp formatter.h)
+target_include_directories(formatter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
