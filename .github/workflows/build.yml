@@ -30,7 +30,6 @@ jobs:
         cd build
         cpack -G TGZ
         cpack -G ZIP
-        cpack -G WIX
         cpack -G DragNDrop
 
     - name: Загрузка артефактов
@@ -40,7 +39,6 @@ jobs:
         path: |
           build/*.tar.gz
           build/*.zip
-          build/*.msi
           build/*.dmg
 
     - name: Создание релиза
@@ -49,7 +47,6 @@ jobs:
         files: |
           build/*.tar.gz
           build/*.zip
-          build/*.msi
           build/*.dmg
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
