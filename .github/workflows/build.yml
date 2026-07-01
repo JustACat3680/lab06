@@ -32,7 +32,6 @@ jobs:
         cpack -G ZIP
         cpack -G DEB
         cpack -G RPM
-        cpack -G DragNDrop
 
     - name: Загрузка артефактов
       uses: actions/upload-artifact@v4
@@ -43,16 +42,12 @@ jobs:
           build/*.zip
           build/*.deb
           build/*.rpm
-          build/*.dmg
   macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
     - name: Установка зависимостей
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential cmake gcc g++ clang
-
+      run: brew install cmake
     - name: Конфигурация
       run: cmake -B build
 
