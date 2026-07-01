@@ -32,6 +32,7 @@ jobs:
         cpack -G ZIP
         cpack -G DEB
         cpack -G RPM
+        cpack -G DragNDrop
 
     - name: Загрузка артефактов
       uses: actions/upload-artifact@v4
@@ -42,6 +43,7 @@ jobs:
           build/*.zip
           build/*.deb
           build/*.rpm
+          build/*.dmg
 
     - name: Создание релиза
       uses: softprops/action-gh-release@v2
@@ -52,6 +54,7 @@ jobs:
           build/*.zip
           build/*.deb
           build/*.rpm
+          build/*.dmg
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
