@@ -10,7 +10,7 @@ on:
         default: 'v1.0.0'
         type: string
 jobs:
-  build:
+  linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -44,17 +44,44 @@ jobs:
           build/*.deb
           build/*.rpm
           build/*.dmg
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Установка зависимостей
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake gcc g++ clang
 
-    - name: Создание релиза
-      uses: softprops/action-gh-release@v2
+    - name: Конфигурация
+      run: cmake -B build
+
+    - name: Сборка
+      run: cmake --build build
+
+    - name: Создание архивов
+      run: |
+        cpack -G DragNDrop
+
+    - name: Загрузка артефактов
+      uses: actions/upload-artifact@v4
       with:
-        tag_name: ${{github.ref_name}}
-        files: |
-          build/*.tar.gz
-          build/*.zip
-          build/*.deb
-          build/*.rpm
+        name: build
+        path: |
           build/*.dmg
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Создание релиза
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{github.ref_name}}
+          files: |
+            build/*.tar.gz
+            build/*.zip
+            build/*.deb
+            build/*.rpm
+            build/*.dmg
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
