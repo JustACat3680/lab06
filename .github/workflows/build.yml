@@ -42,6 +42,7 @@ jobs:
     - name: Создание релиза
       uses: softprops/action-gh-release@v2
       with:
+      tag_name: ${{env.tag_name}}
         files: |
           build/*.tar.gz
           build/*.zip
