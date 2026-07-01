@@ -31,6 +31,7 @@ jobs:
         cpack -G TGZ
         cpack -G ZIP
         cpack -G DEB
+        cpack -G RPM
 
     - name: Загрузка артефактов
       uses: actions/upload-artifact@v4
@@ -40,6 +41,7 @@ jobs:
           build/*.tar.gz
           build/*.zip
           build/*.deb
+          build/*.rpm
 
     - name: Создание релиза
       uses: softprops/action-gh-release@v2
@@ -49,6 +51,7 @@ jobs:
           build/*.tar.gz
           build/*.zip
           build/*.deb
+          build/*.rpm
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
